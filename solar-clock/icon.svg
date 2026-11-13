@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Dark ink background for contrast - night sky feel -->
+  <rect width="32" height="32" rx="6" fill="#2b2318"/>
+  <rect width="32" height="32" rx="6" fill="none" stroke="#5c4f3a" stroke-width="1.5"/>
+  <!-- Arc of the sun's path -->
+  <path d="M 4 24 Q 16 4 28 24" fill="none" stroke="#5c4f3a" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Completed arc (morning to midday) in gold -->
+  <path d="M 4 24 Q 16 4 28 24" fill="none" stroke="#b8860b" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="32" stroke-dashoffset="10"/>
+  <!-- Horizon line -->
+  <line x1="3" y1="24" x2="29" y2="24" stroke="#5c4f3a" stroke-width="1"/>
+  <!-- Sun position on arc -->
+  <circle cx="22" cy="11" r="4" fill="#b8860b"/>
+  <circle cx="22" cy="11" r="2.5" fill="#f5f0e8" opacity="0.85"/>
+  <!-- Small stars -->
+  <circle cx="7"  cy="7"  r="0.8" fill="#9c8c72"/>
+  <circle cx="12" cy="5"  r="0.6" fill="#9c8c72"/>
+  <circle cx="5"  cy="14" r="0.5" fill="#9c8c72"/>
+</svg>

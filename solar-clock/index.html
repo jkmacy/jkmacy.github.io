@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solar Office</title>
+
+<link rel="stylesheet" href="./style.css?v=2026-10-10-breviary2">
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#2b2318">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<style>.companion-nav{display:flex;justify-content:center;gap:12px;margin:8px 16px 24px;font:16px/1.5 system-ui,sans-serif}.companion-nav a{padding:9px 18px;border:1px solid #9c8c72;border-radius:6px;color:#4c3a21;text-decoration:none}.companion-nav a[aria-current]{background:#2b2318;color:#f5f0e8}.ordo-office-link{display:inline-block;color:#70520a;font-size:15px;margin-top:6px;text-underline-offset:3px}.ordo-office-link:focus-visible,.companion-nav a:focus-visible{outline:3px solid #b8860b;outline-offset:3px}.ordo-intro{font-size:14px;line-height:1.6;color:#5c4f3a;margin:8px 0 14px}.current-ordo-wrap{margin:14px 0 0}#current-ordo{color:#ead49b}</style>
+</head>
+<body>
+
+<header>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="48" height="48" style="display:block;margin:0 auto 10px;filter:drop-shadow(0 2px 4px rgba(0,0,0,0.12));">
+  <!-- Dark ink background for contrast - night sky feel -->
+  <rect width="32" height="32" rx="6" fill="#2b2318"/>
+  <rect width="32" height="32" rx="6" fill="none" stroke="#5c4f3a" stroke-width="1.5"/>
+  <!-- Arc of the sun's path -->
+  <path d="M 4 24 Q 16 4 28 24" fill="none" stroke="#5c4f3a" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Completed arc (morning to midday) in gold -->
+  <path d="M 4 24 Q 16 4 28 24" fill="none" stroke="#b8860b" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="32" stroke-dashoffset="10"/>
+  <!-- Horizon line -->
+  <line x1="3" y1="24" x2="29" y2="24" stroke="#5c4f3a" stroke-width="1"/>
+  <!-- Sun position on arc -->
+  <circle cx="22" cy="11" r="4" fill="#b8860b"/>
+  <circle cx="22" cy="11" r="2.5" fill="#f5f0e8" opacity="0.85"/>
+  <!-- Small stars -->
+  <circle cx="7"  cy="7"  r="0.8" fill="#9c8c72"/>
+  <circle cx="12" cy="5"  r="0.6" fill="#9c8c72"/>
+  <circle cx="5"  cy="14" r="0.5" fill="#9c8c72"/>
+</svg>
+  <div class="site-title">Solar Office</div>
+  <div class="site-subtitle">The canonical hours by the sun</div>
+</header>
+<nav class="companion-nav" aria-label="Prayer tools"><a href="./" aria-current="page">Solar Clock</a><a id="ordo-nav" href="/ordo/daily.html">Daily Ordo</a></nav>
+
+<div class="container">
+
+  <!-- Location status -->
+  <div class="location-bar" id="location-bar">
+    <span class="location-dot"></span>
+    <span id="location-text">Choose your location below</span>
+  </div>
+
+  <!-- Permission prompt (hidden once we have location) -->
+  <div class="permission-card" id="permission-card" style="display:none">
+    <div class="icon">☀️</div>
+    <p>Solar Office needs your location to calculate the canonical hours for your position on earth.</p>
+    <button class="btn" id="allow-location">Allow Location</button>
+  </div>
+
+  <!-- Main content (hidden until we have solar data) -->
+  <div id="main-content" style="display:none">
+
+  <p id="polar-note" role="status" hidden></p>
+  <!-- Day toggle -->
+  <div class="day-toggle">
+    <button class="day-btn active" id="btn-today" >Today</button>
+    <button class="day-btn" id="btn-tomorrow" >Tomorrow</button>
+  </div>
+
+    <!-- Tomorrow date header (shown only in tomorrow view) -->
+    <div id="tomorrow-header" style="display:none; font-family:'Cinzel',serif; font-size:1rem; letter-spacing:0.08em; color:var(--ink-mid); text-align:center; margin-bottom:16px;"></div>
+
+    <!-- Current hour card (today only) -->
+    <div id="current-card-wrap">
+    <div class="current-card">
+      <div class="current-hour-label">Current Hour</div>
+      <div class="current-hour-name" id="cur-name">—</div>
+      <div class="current-hour-latin" id="cur-latin">—</div>
+      <div class="clock-label">Seasonal time · first light 00:00</div>
+      <div class="current-time-display" id="cur-time">—</div>
+      <div class="seasonal-detail" id="seasonal-detail"></div>
+      <div class="civil-time" id="civil-time">—</div>
+      <div class="current-date-display" id="cur-date">—</div>
+      <div class="hour-progress-wrap">
+        <div class="hour-progress-fill" id="hour-progress" style="width:0%"></div>
+      </div>
+      <div class="countdown-text" id="countdown-text">—</div>
+      <p class="current-prayer-wrap"><a class="breviary-office-link" id="current-breviary" target="_blank" rel="noopener noreferrer" hidden>Pray the Office</a><span id="current-breviary-note" hidden>Matins is not yet in the Breviary; use the Ordo.</span></p>
+      <p class="current-ordo-wrap"><a class="ordo-office-link" id="current-ordo" href="/ordo/daily.html">Open the Ordo</a></p>
+    </div> <!-- /.current-card -->
+    </div> <!-- /#current-card-wrap -->
+
+    <!-- Solar key times -->
+    <div class="solar-info">
+      <div class="solar-info-card">
+        <div class="label">First Light</div>
+        <div class="value" id="si-firstlight">—</div>
+      </div>
+      <div class="solar-info-card">
+        <div class="label">Solar Noon</div>
+        <div class="value gold" id="si-noon">—</div>
+      </div>
+      <div class="solar-info-card">
+        <div class="label">Last Light</div>
+        <div class="value" id="si-lastlight">—</div>
+      </div>
+    </div>
+
+    <!-- Day arc -->
+    <div class="arc-section">
+      <h2>Day Arc</h2>
+      <div class="day-arc-container">
+        <svg id="arc-svg" viewBox="0 0 600 80" preserveAspectRatio="none"></svg>
+      </div>
+    </div>
+
+    <!-- Hours list -->
+    <div class="section-label">The Divine Office</div>
+    <p class="ordo-intro">Pray an Office at Orthodox West Breviary, or open its Ordo instructions for the Diurnal. Links use the device-local civil date of the scheduled Office, including after midnight. Vespers stays on its civil evening; the Breviary handles feast precedence. Matins uses the Ordo, and Compline’s Ordo link opens the day’s overview. Breviary links need an internet connection.</p>
+    <ul class="hours-list" id="hours-list"></ul>
+
+  </div>
+<details class="settings" id="settings" open>
+<summary>Location &amp; installation</summary>
+<p>Use your device location or enter coordinates. Location stays on this device; calculations run on your device.</p>
+<button class="btn" id="locate">Use my location</button>
+<form id="location-form" class="location-form">
+<label>Latitude (°)<input id="latitude" type="number" min="-90" max="90" step="any" placeholder="29.7604" required></label>
+<label>Longitude (°)<input id="longitude" type="number" min="-180" max="180" step="any" placeholder="-95.3698" required></label>
+<button class="btn" type="submit">Save location</button>
+</form>
+<p>North and east are positive; south and west are negative. Civil times and link dates use this device’s time zone, even when coordinates are elsewhere.</p>
+<p id="location-status" role="status"></p>
+<button class="btn" id="install" hidden>Install Solar Office</button>
+<p id="pwa-status" role="status">Install from your browser’s menu when available.</p>
+</details>
+<div class="notes"><p>The day begins at first light (civil dawn), at 00:00, with Lauds. The time from first light to last light (civil dusk) is divided into twelve seasonal hours; last light is 12:00, with Compline. The night has twelve more hours, ending at 24:00 as the next first light resets the clock. Seasonal minutes and seconds stretch with their hour. The smaller local clock and countdown use ordinary time.</p>
+<p>Lauds begins at first light (00:00), Prime at sunrise, Terce at 03:00, Sext at 06:00 (approximately solar noon), None at 09:00, and Vespers at sunset. Compline begins at last light (12:00), and Matins halfway through the night at 18:00. These retain the app’s devotional pattern, not binding Benedictine rubrics.</p>
+<p>Today and Tomorrow refer to first-light-to-first-light days. Before first light, the current day still bears the previous day’s date. Times are approximate; terrain and weather affect visible dawn and sunset.</p></div>
+</div>
+
+<script type="module" src="./app.js?v=2026-10-10-breviary2"></script>
+</body>
+</html>

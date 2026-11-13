@@ -1,0 +1,444 @@
+
+  :root {
+    --parchment:   #f5f0e8;
+    --parchment-d: #ede6d6;
+    --parchment-dd:#e0d8c4;
+    --ink:         #2b2318;
+    --ink-mid:     #5c4f3a;
+    --ink-light:   #9c8c72;
+    --red:         #8b2020;
+    --gold:        #b8860b;
+    --gold-light:  #d4a820;
+    --green:       #2e5c2e;
+    --blue:        #1a3a5c;
+    --border:      #c8b89a;
+    --radius:      4px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'EB Garamond', Georgia, serif;
+    background: var(--parchment);
+    color: var(--ink);
+    min-height: 100vh;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  }
+
+  /* ---- Header ---- */
+  header {
+    text-align: center;
+    padding: 32px 20px 20px;
+    border-bottom: 2px solid var(--border);
+    position: relative;
+  }
+  header::before, header::after {
+    content: '✦';
+    color: var(--gold);
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    font-size: 1rem;
+  }
+  header::before { left: 24px; }
+  header::after  { right: 24px; }
+
+  .site-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+  }
+
+  .site-subtitle {
+    font-size: 0.95rem;
+    color: var(--ink-mid);
+    font-style: italic;
+    margin-top: 4px;
+  }
+
+  /* ---- Container ---- */
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 24px 16px 60px;
+  }
+
+  /* ---- Location bar ---- */
+  .location-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 24px;
+    font-size: 0.85rem;
+    color: var(--ink-mid);
+    font-style: italic;
+  }
+
+  .location-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.75); }
+  }
+
+  /* ---- Current hour card ---- */
+  .current-card {
+    background: var(--ink);
+    color: var(--parchment);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .current-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(184,134,11,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .current-hour-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .current-hour-name {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--parchment);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .current-hour-latin {
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--ink-light);
+    margin-bottom: 20px;
+  }
+
+  .current-time-display {
+    font-size: 3rem;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 4px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .current-date-display {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--ink-light);
+    margin-bottom: 20px;
+  }
+
+  /* ---- Progress bar ---- */
+  .hour-progress-wrap {
+    background: rgba(255,255,255,0.08);
+    border-radius: 20px;
+    height: 6px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .hour-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 20px;
+    transition: width 1s linear;
+  }
+
+  .countdown-text {
+    font-size: 0.82rem;
+    color: var(--ink-light);
+    font-style: italic;
+  }
+
+  /* ---- Day arc ---- */
+  .arc-section {
+    background: #fff9f0;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+
+  .arc-section h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .arc-section h2::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .day-arc-container {
+    position: relative;
+    height: 80px;
+    margin-bottom: 4px;
+  }
+
+  .day-arc-container svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  /* ---- Hours list ---- */
+  .hours-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .hour-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    background: #fff9f0;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hour-item.active {
+    border-color: var(--gold);
+    background: var(--parchment-dd);
+    box-shadow: 0 0 0 2px rgba(184,134,11,0.18);
+  }
+
+  .hour-item.past {
+    opacity: 0.5;
+  }
+
+  .hour-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--gold);
+    border-radius: 2px 0 0 2px;
+  }
+
+  .hour-icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: center;
+  }
+
+  .hour-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .hour-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .hour-latin {
+    font-family: 'EB Garamond', serif;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--ink-light);
+    font-weight: 400;
+    letter-spacing: 0;
+  }
+
+  .hour-desc {
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    font-style: italic;
+    margin-top: 1px;
+  }
+
+  .hour-time {
+    font-size: 0.95rem;
+    color: var(--ink-mid);
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .hour-time .solar-label {
+    display: block;
+    font-size: 0.68rem;
+    color: var(--ink-light);
+    font-style: italic;
+    text-align: right;
+  }
+
+  /* ---- Location permission ---- */
+  .permission-card {
+    background: #fff9f0;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .permission-card .icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .permission-card p { color: var(--ink-mid); font-style: italic; margin-bottom: 16px; }
+
+  .btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    padding: 10px 22px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    border: 1.5px solid var(--ink);
+    background: var(--ink);
+    color: var(--parchment);
+    transition: opacity 0.15s;
+  }
+  .btn:hover { opacity: 0.85; }
+
+  /* ---- Section divider ---- */
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin: 20px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ---- Solar noon banner ---- */
+  .solar-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .solar-info-card {
+    background: #fff9f0;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px;
+    text-align: center;
+  }
+
+  .solar-info-card .label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-light);
+    margin-bottom: 4px;
+  }
+
+  .solar-info-card .value {
+    font-size: 1.05rem;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .solar-info-card .value.gold { color: var(--gold); }
+
+  /* ---- Day Toggle ---- */
+  .day-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin: 0 auto 20px;
+    width: fit-content;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .day-btn {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    padding: 8px 22px;
+    border: none;
+    background: transparent;
+    color: var(--ink-mid);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .day-btn + .day-btn { border-left: 1.5px solid var(--border); }
+  .day-btn.active { background: var(--ink); color: var(--parchment); }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 480px) {
+    .current-hour-name { font-size: 1.7rem; }
+    .current-time-display { font-size: 2.4rem; }
+    .solar-info { grid-template-columns: 1fr 1fr; }
+    .solar-info-card:last-child { grid-column: span 2; }
+  }
+
+.clock-label {font-family: 'Cinzel',serif; font-size:.7rem; letter-spacing:.12em; color:#d4a820; margin:18px 0 8px;}
+.civil-time {font-size:1rem; color:#e0d8c4; margin:12px 0 8px; font-variant-numeric:tabular-nums;}
+.notes {line-height:1.5; font-size:.95rem; color:var(--ink-mid); margin:20px 0;}
+.settings {margin:16px 0; padding:16px; border:1px solid var(--border); border-radius:4px;}
+.settings summary {cursor:pointer; margin-bottom:12px;}
+.location-form {display:flex; gap:12px; flex-wrap:wrap; margin:14px 0;}
+.location-form label {flex:1; min-width:110px;}
+input {display:block; width:100%; padding:10px; margin-top:6px; border:1px solid var(--border); background:#fff9f0; font:inherit;}
+button:focus-visible,summary:focus-visible,input:focus-visible {outline:3px solid var(--gold); outline-offset:3px;}
+#location-status,#pwa-status {margin-top:12px; line-height:1.4;}
+#polar-note {color:var(--red); margin-bottom:16px;}
+.hour-name {flex-wrap:wrap; gap:2px 8px;}
+.hour-time {min-width:100px;}
+.solar-info-card .solar-label {display:block; font-size:.8rem; color:var(--ink-mid); margin-top:4px;}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
+
+.seasonal-detail {font-size:.85rem;line-height:1.4;color:#d8cbb7;margin:12px auto;max-width:360px;}
+
+/* Dated prayer links supplement the preserved Ordo. */
+.breviary-office-link{display:block;width:fit-content;color:#70520a;font-size:15px;margin-top:9px;text-underline-offset:3px;font-weight:600}.breviary-unavailable{display:block;font-size:13px;color:#5c4f3a;margin-top:8px}.breviary-office-link:focus-visible{outline:3px solid #b8860b;outline-offset:3px}.current-prayer-wrap{margin:16px 0 0}.current-prayer-wrap .breviary-office-link{color:#fff1c6;margin:0 auto;font-size:18px}.current-prayer-wrap span{font-size:14px;color:#ead49b}.breviary-office-link[hidden],#current-breviary-note[hidden]{display:none}
